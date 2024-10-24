@@ -1,0 +1,119 @@
+
+@font-face {
+    font-family: "public pixel";
+    src: url("font/PublicPixel-eZPz6.ttf") format("truetype");
+}
+
+
+body{
+    background-image: url("cat.jpg");
+    background-position: center center; /*viewport selalu di center*/
+    background-attachment: fixed; /*agar background tetep ada meskipun discroll kebawah*/
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #464646; 
+}
+
+
+
+.main-page {
+    
+    height: 70vh;
+
+    display: flex;
+    
+    flex-direction: column;
+    
+    
+    justify-content: center;
+    align-items: center;
+    
+    text-align: center;
+    font-family: "public pixel", sans-serif;
+    h1{
+        color: #f2e311;
+        
+    }
+    
+      
+    #player-name{
+        margin-top: 70px;
+        label{
+            margin-bottom: 10px;
+            font-size: smaller;
+        }
+        input{
+            margin-top: 20px;
+        }
+        #pname-button{
+            margin-top: 10px;
+            
+        }
+        
+    }
+    
+    
+  }
+
+.second-page{
+
+    height: 70vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    
+    p{
+        font-family: "public pixel", sans-serif;
+        
+    }
+    
+    
+    
+}
+
+#sentence-box{
+    
+    width: 500px;
+    padding: 20px;
+    border: 2px solid #007BFF;
+    background-color: #f0f8ff;
+    color: #333;
+    
+    border-radius: 10px;
+    
+    text-align: center;
+    
+}
+
+#drop-zone {
+    
+
+    width: 500px;
+    padding: 20px;
+    border: 2px solid #007BFF;
+    background-color: #f0f8ff;
+    color: #333;
+    
+    border-radius: 10px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+#button_refresh{
+    width: 200px;
+}
+
+.word {
+    display: inline-block;
+    
+    
+    padding: 5px;
+    margin: 3px;
+    cursor: grab;
+    border: 1px dashed transparent;
+}
+
+
