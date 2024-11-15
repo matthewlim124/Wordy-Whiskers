@@ -16,8 +16,26 @@
                 
             <h1>WORDY WHISKERS!</h1>
             <p>Welcome to wordy whiskers, where you can train your <br> english grammar and vocabulary proficiency</p>
+            <div class="signup-container">
+                <h2>Sign Up</h2>
+                <form id="signupForm" method="POST">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <button type="submit">Sign Up</button>
+                    <p>
+                        Already have an account? 
+                        <a href="index2.html">Sign In</a> 
+                    </p>
+                </form>
+            </div>
+            <br>
             
-            <button type="button" id="pname-button" onclick="window.location.href = 'tugas2.html';">Start</button>
             
         </div>
             
@@ -28,5 +46,5 @@
 
 
     </body>
-
+    <script src="script_index.js" defer></script>
 </html>

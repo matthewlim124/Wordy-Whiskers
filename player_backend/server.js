@@ -17,9 +17,6 @@ app.use(errorHandler); //ubah html format dari error ke json
 
 app.use(express.static(path.join(__dirname, "..")));
 
-app.get("*", (req,res) =>{
-    res.sendFile(path.join(__dirname, "..", "index.html"));
-})
 
 
 
