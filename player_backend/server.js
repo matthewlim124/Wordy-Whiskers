@@ -3,6 +3,7 @@ const connectDb = require("./config/dbConnection.js")
 const errorHandler = require("./middleware/errorHandler.js");
 const dotenv = require("dotenv").config();
 const path = require("path");
+const cors = require('cors');
 
 connectDb();
 const app = express();
@@ -21,6 +22,11 @@ app.use(express.static(path.join(__dirname)));
 app.get("/", (req,res) => {
     res.send("Hello World");
 });
+
+app.use(cors({
+    origin: 'https://wordywhiskers.netlify.app/', 
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+  }));
 
 app.listen(port,() => {
     console.log(`Listening on port ${port}`);
