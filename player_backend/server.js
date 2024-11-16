@@ -15,7 +15,7 @@ app.use("/api/user", require("./routes/userRoutes.js"));
 app.use(errorHandler); //ubah html format dari error ke json
 
 
-app.use(express.static(path.join(__dirname, "..")));
+app.use(express.static(path.join(__dirname)));
 
 
 app.get("/", (req,res) => {

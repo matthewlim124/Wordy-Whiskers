@@ -1,5 +1,0 @@
-runtime: nodejs18
-env: standard
-
-
-entrypoint: node player_backend/server.js
