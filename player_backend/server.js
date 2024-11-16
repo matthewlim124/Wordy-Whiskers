@@ -18,9 +18,11 @@ app.use(errorHandler); //ubah html format dari error ke json
 app.use(express.static(path.join(__dirname, "..")));
 
 
-
+app.get("/", (req,res) => {
+    res.send("Hello World");
+});
 
 app.listen(port,() => {
     console.log(`Listening on port ${port}`);
-})
+});
 
