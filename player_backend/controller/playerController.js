@@ -1,6 +1,9 @@
 const asyncHandler = require("express-async-handler"); // memudahkan async function untuk berinteraksi dengan error handler 
 const Player = require("../models/playerModel.js");
 const {constants} = require("../constants.js");
+const dotenv = require("dotenv");
+const axios = require("axios");
+const langtool = require("languagetool-api");
 //get  players
 //@route for GET /api/player
 //@access private
@@ -42,7 +45,7 @@ const postPlayer = asyncHandler (async (req,res) =>{
 
     const player = await Player.create({
         playername,
-        score,
+        score: "0",
         correct_ans,
         user_id: req.user.id,
     });
@@ -98,5 +101,45 @@ const deletePlayerId = asyncHandler( async (req,res) =>{
 
 });
 
+//check Grammar
+//@route for POST /api/player
+//@access private
 
-module.exports = {getPlayer, getPlayerId, postPlayer, putPlayerId, deletePlayerId};
+const checkGrammar = asyncHandler(async (req, res) => {
+    console.log('Request received:', req.body);
+    const { text } = req.body; // Expecting { text: "your text" } in the request body
+  
+    if (!text) {
+        res.statusCode = constants.VALIDATION;
+        throw new Error("Expecting text!");
+        
+    }
+
+    console.log(text);
+    
+    langtool.check({
+        language: 'en-US',  // Language of the text
+        text:  text 
+    }, (err, result) => {
+        if (err) {
+            console.error("Error:", err);
+        } else {
+            
+            res.statusCode = 200;
+            res.json(result.matches);
+        }
+    });
+    
+    
+    
+    
+  
+      
+    
+
+    
+    
+  });
+
+
+module.exports = {getPlayer, getPlayerId, postPlayer, putPlayerId, deletePlayerId, checkGrammar};

@@ -96,23 +96,12 @@ body{
     
 }
 
-#drop-zone {
-    
-
-    width: 500px;
-    padding: 20px;
-    border: 2px solid #007BFF;
-    background-color: #f0f8ff;
-    color: #333;
-    
-    border-radius: 10px;
+#button-submit {
+    width: 250px;
     margin: 20px auto;
-    text-align: center;
 }
 
-#button_refresh{
-    width: 200px;
-}
+
 
 .word {
     display: inline-block;
@@ -125,3 +114,15 @@ body{
 }
 
 
+#score-container {
+    position: absolute;      
+    top: 20px;            
+    right: 20px;             
+    background-color: rgba(0, 0, 0, 0.7);  
+    color: white;            
+    padding: 10px;           
+    border-radius: 5px;      
+    font-family: "public pixel", sans-serif;
+    font-size: 18px;         
+    z-index: 1000;           
+}

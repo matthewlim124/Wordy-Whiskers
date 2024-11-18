@@ -18,13 +18,38 @@
             <div id="sentence-box">
                 
             </div>
-            <p>Drag your words below</p>
-            <div id="drop-zone">
+            <p>Type your answer</p>
+            
+            <form id="checkForm" method="POST">
+
+                <div class="form-group">
+                    <input type="text" name="answer" id="answer">
+                </div>
+
+                <div class="button-container">
+                    <button type="submit" id="button-submit"">Check Answer</button>
+                    <br>
+                    <button id="button_refresh" onclick="location.reload()">Refresh Order</button>
+                    
+                </div>
                 
+             </form>
+            
                 
             </div>
+            
+            
+            
+            
+        </div>
 
-            <button id="button_refresh" onclick="location.reload()">Refresh Order</button>
+        <div id="score-container">
+            <p>Score: <span id="grammar-score">0</span></p>
+        </div>
+
+        <div class="score">
+
+
         </div>
             
     

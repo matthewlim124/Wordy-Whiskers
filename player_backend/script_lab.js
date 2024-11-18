@@ -1,6 +1,7 @@
 
 
 
+
 const preposition_list = ['is','am','are','was','were']
 const a = ['a','an'];
 const preposition_list2 = ['on', 'at', 'in']
@@ -37,7 +38,7 @@ function appendWordToList(type) {
 
     
     li.classList.add('word'); 
-    li.setAttribute('draggable', true);
+    
 
     
     document.getElementById('sentence-box').appendChild(li);
@@ -73,33 +74,44 @@ function shuffledWords(words_random){
 
 let words = document.getElementsByClassName("word");
 let sentence_box = document.getElementById("sentence-box");
-let drop_zone = document.getElementById("drop-zone");
 
-for(word of words){
-    word.addEventListener("dragstart", function(e){
-        let selected = e.target;
 
-        drop_zone.addEventListener("dragover", function(e){
-            e.preventDefault();
-        })
 
-        drop_zone.addEventListener("drop", function(e){
-            drop_zone.appendChild(selected);
-            selected = null;
-        })
 
-        sentence_box.addEventListener("dragover", function(e){
-            e.preventDefault();
-        })
 
-        sentence_box.addEventListener("drop", function(e){
-            sentence_box.appendChild(selected);
-            selected = null;
-        })
-        
-    })
+let score = 0;
 
+document.getElementById("checkForm").addEventListener("submit", async function(event){
+    event.preventDefault();
+
+    const text = document.getElementById("answer").value;
+    const storedScore = localStorage.getItem("grammarScore");
+    console.log(text);
+    score += scoreSentence(text);
     
+    const scoreElement = document.getElementById("grammar-score");
+    scoreElement.textContent = score;
+   
+    
+})
 
+function scoreSentence(sentence) {
+    const words = sentence.toLowerCase().split(' '); // Convert to lowercase for consistency
+    
+    
+    words.forEach(word => {
+        if (noun.includes(word)) {
+            score += 2;  
+        } else if (verb.includes(word)) {
+            score += 2;  
+        } else if (pronoun.includes(word)) {
+            score += 1;  
+        } else if (preposition_list.includes(word) || preposition_list2.includes(word)) {
+            score += 1;  
+        } else if (a.includes(word)) {
+            score += 1;  
+        }
+    });
+
+    return score;
 }
-

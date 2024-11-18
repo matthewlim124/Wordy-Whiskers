@@ -14,12 +14,17 @@
     "nodemon": "^3.1.7"
   },
   "dependencies": {
+    "@saplingai/sapling-js": "^1.0.33",
+    "axios": "^1.7.7",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "express-async-handler": "^1.2.0",
+    "grammarbot": "^1.0.3",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.8.1"
+    "languagetool-api": "^1.1.2",
+    "mongoose": "^8.8.1",
+    "write-good": "^1.0.8"
   }
 }
