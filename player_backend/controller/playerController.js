@@ -106,7 +106,7 @@ const deletePlayerId = asyncHandler( async (req,res) =>{
 
 //check Grammar
 //@route for POST /api/player
-//@access public
+//@access private
 
 const checkGrammar = async (req, res) => {
     console.log('Request received:', req.body);
@@ -121,7 +121,7 @@ const checkGrammar = async (req, res) => {
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-    const prompt = `Fix the grammatical mistake of this sentence ${text}`;
+    const prompt = `Fix the grammatical mistake of this sentence without giving me the reasoning, ${text} `;
 
     const result = await model.generateContent(prompt);
     console.log(result.response.text());

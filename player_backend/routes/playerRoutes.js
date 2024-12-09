@@ -6,13 +6,13 @@ const {getPlayer, getPlayerId, postPlayer, putPlayerId, deletePlayerId, checkGra
 const validateToken = require("../middleware/validateTokenHandler.js");
 
 
+router.use(validateToken);
 
-
-router.route("/", validateToken).get(getPlayer).post(postPlayer);
+router.route("/").get(getPlayer).post(postPlayer);
 router.route("/checkGrammar").post(checkGrammar);
 
 
-router.route("/:id", validateToken).get(getPlayerId).put(putPlayerId).delete(deletePlayerId);
+router.route("/:id").get(getPlayerId).put(putPlayerId).delete(deletePlayerId);
 
 
 

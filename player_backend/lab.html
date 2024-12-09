@@ -29,7 +29,7 @@
                 <div class="button-container">
                     <button type="submit" id="button-submit"">Check Answer</button>
                     <br>
-                    <button type="button" id="button_refresh" onclick="location.reload()">Refresh Order</button>
+                    <button type="button" id="button_refresh" onclick="location.reload()">Next Question</button>
                     
                 </div>
                 
@@ -43,9 +43,14 @@
             
         </div>
 
-        <div id="score-container">
-            <p>Score: <span id="grammar-score">0</span></p>
+        <div id="player-container">
+            <p>Player: <span id="player-name"></span></p>
+            <p>Score: <span id="player-score"></span></p>
+            <p>Correct Answer: <span id="player-ans"></span></p>
+            
         </div>
+
+        
 
         <div class="score">
 
@@ -54,7 +59,7 @@
             
     
 
-    <script src="script_lab.js" defer></script>
+    <script type = "module" src="script_lab.js" defer></script>
 
     
         
