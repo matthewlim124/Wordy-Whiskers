@@ -11,7 +11,7 @@ const sign_in = async function(){
 
     try{
         //https://silent-oxide-441601-r2.et.r.appspot.com//api/user/login
-        const response = await fetch('http://localhost:8080/api/user/login', {
+        const response = await fetch('https://silent-oxide-441601-r2.et.r.appspot.com/api/user/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -48,7 +48,7 @@ document.getElementById('signinForm').addEventListener('submit',  async function
     try {
         const data = await sign_in();
         if (data) {
-            alert(`Sign-in successful! Access Token: ${data.accessToken}`);
+            
             window.location.href = 'lab.html';
             
         } 

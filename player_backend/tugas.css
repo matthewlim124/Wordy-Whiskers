@@ -99,9 +99,11 @@ label{
     align-items: center;
     text-align:center;
     flex-direction: column;
+
+    font-family: "public pixel", "Press Start 2P", sans-serif;
     #sentence-box{
-    
-        width: 500px;
+        font-family: sans-serif, "public pixel", "Press Start 2P";
+        width: auto;
         padding: 20px;
         border: 2px solid #007BFF;
         background-color: #f0f8ff;
@@ -132,8 +134,22 @@ label{
     
 }
 
+.rules-page{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid;
+    border-radius: 10px;
+    
+    background-color: skyblue;
+    padding: 20px;
+    font-family: "Press Start 2P", "public pixel", sans-serif;
+
+    
+}
 
 #player-container {
+    
     position: absolute;    
     
     
@@ -149,6 +165,40 @@ label{
 }
 
 
+#button-rules-container{
 
+    
+    #create-player{
+        position: absolute; 
+        bottom:80px;
+        left:20px;
+        
+        font-family: "public pixel", "Press Start 2P", sans-serif;
+        font-size: 18px;
+         
+    }
+    
+    #rules-button{
+        position: absolute; 
+        bottom:40px;
+        left:20px;
+        
+        font-family: "public pixel", "Press Start 2P", sans-serif;
+        font-size: 18px;
+        
+    }
+}   
+
+
+
+.register-player-container{
+
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: "public pixel", "Press Start 2P", sans-serif;
+}
 
 

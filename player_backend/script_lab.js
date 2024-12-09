@@ -32,8 +32,8 @@ const player_info_get = async function(){
     try{
         
         
-        console.log(`From player info ${token}`);
-        const response = await fetch(`http://localhost:8080/api/player/`, {
+        
+        const response = await fetch(`https://silent-oxide-441601-r2.et.r.appspot.com/api/player/`, {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
@@ -44,9 +44,30 @@ const player_info_get = async function(){
         
         if (response.ok) {
             const data = await response.json();
-            alert("Success get player info");
             
+            
+            if(data.length == 0){
+                
+                const response2 = await fetch('https://silent-oxide-441601-r2.et.r.appspot.com/api/player/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            "Authorization": `Bearer ${token}`,
+                        },
+                        body: JSON.stringify({ playername: "default"}),
+                });
+
+                return data;
+        
+                    
+                
+            }
+
             return data;
+
+            
+
+           
             
             
         }
@@ -71,10 +92,12 @@ const load_player_name  = async function(){
         player_name.textContent = data[0].playername;
         player_score.textContent = data[0].score;
         player_ans.textContent = data[0].correct_ans;
+
+        
         
     }catch(err){
         console.error(`Server error cannot load user data !`, err);
-        alert('An error occurred. Please try again.');
+        window.location.reload();
     }
 };
 
@@ -91,7 +114,7 @@ document.getElementById("checkForm").addEventListener("submit", async function(e
     console.log(`This is text from html ${text}`);
     try{
 
-        const response = await fetch('http://localhost:8080/api/player/checkGrammar', {
+        const response = await fetch('https://silent-oxide-441601-r2.et.r.appspot.com/api/player/checkGrammar', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -102,7 +125,7 @@ document.getElementById("checkForm").addEventListener("submit", async function(e
 
         if (response.ok) {
             const data = await response.json();
-            alert(`Text succesfully checked ${data}`);
+            alert(`Sentence graded! Answer: ${data}`);
             scoreSentence(text, data);
             
         } else {
@@ -131,7 +154,7 @@ async function scoreSentence(sentence, ai_checked) {
     let num = Number(current[0].score);
     let num1 = Number(current[0].correct_ans);
     words.forEach(word => {
-        if(word == correct_words[idx]){
+        if( word == correct_words[idx]){
             
             num += 1;
             
@@ -141,8 +164,9 @@ async function scoreSentence(sentence, ai_checked) {
         idx += 1;
     });
     
-    if(num == Number(current[0].score) + idx){
+    if(num >= Number(current[0].score) + correct_words.length - 1){
         num1 += 1;
+        
     }
 
     try{
@@ -151,7 +175,7 @@ async function scoreSentence(sentence, ai_checked) {
         const score = String(num);
         const correct_ans = String(num1);
         
-        const response = await fetch(`http://localhost:8080/api/player/${current[0]._id}`, {
+        const response = await fetch(`https://silent-oxide-441601-r2.et.r.appspot.com/api/player/${current[0]._id}`, {
             method: "PUT",
             headers: {
                 'Content-Type': 'application/json',
@@ -161,8 +185,7 @@ async function scoreSentence(sentence, ai_checked) {
         });
 
         if (response.ok) {
-            const data = await response.json();
-            alert(`Score successfully updated! ${data}`);
+            
             window.location.reload();
             
         } else {
@@ -179,7 +202,7 @@ async function scoreSentence(sentence, ai_checked) {
 }
 
 
-const pronoun = ['he', 'she', 'it', 'they', 'we', 'you', 'i', 'them', 'us', 'his']
+const pronoun = ['he', 'she', 'it', 'they', 'we', 'you', 'i']
 const noun = ['apple', 'banana', 'car', 'dog', 'elephant', 'flower', 'guitar', 'house', 'island', 'jacket', 
 'kite', 'lamp', 'mountain', 'notebook', 'ocean', 'pencil', 'queen', 'river', 'sun', 'tree', 
 'umbrella', 'vase', 'whale', 'xylophone', 'yacht', 'zebra', 'book', 'chair', 'desk', 'engine', 'forest', 'glass', 'hat', 'ice', 'jungle', 'key', 

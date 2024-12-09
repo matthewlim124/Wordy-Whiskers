@@ -40,8 +40,8 @@ const getPlayerId = asyncHandler (async (req,res) =>{
 const postPlayer = asyncHandler (async (req,res) =>{
     res.statusCode = 201;
     // console.log("The request body : ", req.body);
-    const {playername, score, correct_ans} = req.body;
-    if(!playername || !score || !correct_ans){
+    const {playername} = req.body;
+    if(!playername){
         res.statusCode = constants.VALIDATION;
         throw new Error("All fields must have value");
     }
@@ -49,7 +49,7 @@ const postPlayer = asyncHandler (async (req,res) =>{
     const player = await Player.create({
         playername,
         score: "0",
-        correct_ans,
+        correct_ans: "0",
         user_id: req.user.id,
     });
     res.json(player);
@@ -121,7 +121,7 @@ const checkGrammar = async (req, res) => {
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-    const prompt = `Fix the grammatical mistake of this sentence without giving me the reasoning, ${text} `;
+    const prompt = `Fix the grammatical mistake of this sentence, ${text}, also i want your response to be just the correct asnwer.  `;
 
     const result = await model.generateContent(prompt);
     console.log(result.response.text());
