@@ -2,15 +2,13 @@
 
 
 
-const preposition_list = ['is','am','are','was','were']
-const a = ['a','an'];
-const preposition_list2 = ['on', 'at', 'in']
-const pronoun = ['i','you','we','they','he','she','it']
+
+const pronoun = ['he', 'she', 'it', 'they', 'we', 'you', 'i', 'them', 'us', 'his']
 const noun = ['apple', 'banana', 'car', 'dog', 'elephant', 'flower', 'guitar', 'house', 'island', 'jacket', 
 'kite', 'lamp', 'mountain', 'notebook', 'ocean', 'pencil', 'queen', 'river', 'sun', 'tree', 
 'umbrella', 'vase', 'whale', 'xylophone', 'yacht', 'zebra', 'book', 'chair', 'desk', 'engine', 'forest', 'glass', 'hat', 'ice', 'jungle', 'key', 
 'lion', 'moon', 'necklace', 'orange', 'phone', 'quilt', 'road', 'sand', 'turtle', 'violin', 
-'window', 'yarn', 'zoo', 'bottle', 'coin']
+'window', 'yarn', 'zoo', 'bottle', 'coin', 'sun', 'ocean', 'mountain', 'tree', 'computer', 'school', 'house', 'movie', 'garden', 'flower', 'music', 'phone', 'table', 'teacher', 'country', 'bread', 'family', 'city', 'road', 'river', 'lake']
 const verb = ['open', 'close', 'read', 'sit', 'move', 'start', 'climb', 'break', 'build', 'draw', 
 'carry', 'see', 'find', 'lift', 'watch', 'throw', 'catch', 'ride', 'shine', 'cover', 
 'fill', 'shake', 'hold', 'touch', 'drop', 'take']
@@ -19,14 +17,6 @@ function getRandomWord(words) {
     const randomIndex = Math.floor(Math.random() * words.length);
     return words[randomIndex];
 }
-
-const temp = appendWordToList(pronoun);
-const temp1 = appendWordToList(verb);
-const temp2 = appendWordToList(preposition_list2);
-const temp4 = appendWordToList(a);
-const temp3 = appendWordToList(noun);
-
-
 
 
 function appendWordToList(type) {
@@ -44,24 +34,6 @@ function appendWordToList(type) {
     document.getElementById('sentence-box').appendChild(li);
 }
 
-
-const words_randoms = Array.from(document.querySelectorAll('.word'));
-
-const shuffled = shuffledWords(words_randoms);
-
-
-
-
-const container = document.getElementById("sentence-box");
-
-
-container.innerHTML = '';
-
-
-shuffled.forEach(word => {
-    container.appendChild(word);
-});
-
 function shuffledWords(words_random){
     for (let i = words_random.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -70,48 +42,72 @@ function shuffledWords(words_random){
     return words_random;
 }
 
+//masukan kata ke sentence box
+appendWordToList(pronoun);
+appendWordToList(verb);
+appendWordToList(noun);
 
 
-let words = document.getElementsByClassName("word");
-let sentence_box = document.getElementById("sentence-box");
+
+
+
+// let words = document.getElementsByClassName("word");
+// let sentence_box = document.getElementById("sentence-box");
 
 
 
 
 
-let score = 0;
+
 
 document.getElementById("checkForm").addEventListener("submit", async function(event){
     event.preventDefault();
 
     const text = document.getElementById("answer").value;
-    const storedScore = localStorage.getItem("grammarScore");
-    console.log(text);
-    score += scoreSentence(text);
-    
-    const scoreElement = document.getElementById("grammar-score");
-    scoreElement.textContent = score;
+    console.log(`This is text from html ${text}`);
+    try{
+
+        const response = await fetch('http://localhost:8080/api/player/checkGrammar', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ text }),
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            alert(`Text succesfully checked ${data}`);
+            
+            
+        } else {
+            const error = await response.json();
+            alert(`Error: ${error.message}`);
+        }
+    } catch (err) {
+        console.error('Check Answer failed!', err);
+        alert('An error occurred. Please try again.');
+    }
+
+    scoreSentence(text, data);
    
     
 })
 
-function scoreSentence(sentence) {
-    const words = sentence.toLowerCase().split(' '); // Convert to lowercase for consistency
-    
-    
+let score = 0;
+
+function scoreSentence(sentence, ai_checked) {
+    const words = sentence.toLowerCase().split(' '); 
+    const correct_words = ai_checked.toLowerCase().split(' ');
+    let idx = 0;
     words.forEach(word => {
-        if (noun.includes(word)) {
-            score += 2;  
-        } else if (verb.includes(word)) {
-            score += 2;  
-        } else if (pronoun.includes(word)) {
-            score += 1;  
-        } else if (preposition_list.includes(word) || preposition_list2.includes(word)) {
-            score += 1;  
-        } else if (a.includes(word)) {
-            score += 1;  
+        if(word == correct_words[idx]){
+            score += 1;
+        }else{
+
         }
+        idx += 1;
     });
 
-    return score;
+    
 }

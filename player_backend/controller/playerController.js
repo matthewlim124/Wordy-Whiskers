@@ -4,6 +4,9 @@ const {constants} = require("../constants.js");
 const dotenv = require("dotenv");
 const axios = require("axios");
 const langtool = require("languagetool-api");
+const OpenAI = require("openai");
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+
 //get  players
 //@route for GET /api/player
 //@access private
@@ -103,11 +106,11 @@ const deletePlayerId = asyncHandler( async (req,res) =>{
 
 //check Grammar
 //@route for POST /api/player
-//@access private
+//@access public
 
-const checkGrammar = asyncHandler(async (req, res) => {
+const checkGrammar = async (req, res) => {
     console.log('Request received:', req.body);
-    const { text } = req.body; // Expecting { text: "your text" } in the request body
+    const { text } = req.body; 
   
     if (!text) {
         res.statusCode = constants.VALIDATION;
@@ -115,23 +118,60 @@ const checkGrammar = asyncHandler(async (req, res) => {
         
     }
 
-    console.log(text);
+    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+    const prompt = `Fix the grammatical mistake of this sentence ${text}`;
+
+    const result = await model.generateContent(prompt);
+    console.log(result.response.text());
+    res.json(result.response.text());
+
+    //limit reached
+    // const openAI = new OpenAI({apiKey: process.env.OPEN_AI_KEY});
+    // const modelAI = "gpt-4o-mini";
+
+    // const messages = [
+
+    //     {
+    //         role: "system",
+    //         content: "You are an assistant to help correct grammatical error from a sentence",
+
+    //     },
+
+    //     {
+    //         role:"user",
+    //         content: `Fix any grammatical error of this sentence without changing any of the words, ${text}`
+    //     },
+    // ]
     
-    langtool.check({
-        language: 'en-US',  // Language of the text
-        text:  text 
-    }, (err, result) => {
-        if (err) {
-            console.error("Error:", err);
-        } else {
+    // const completion = await openAI.chat.completions.create({
+        
+    //     model: modelAI,
+    //     messages: messages,
+    //     temperature: 0.7
+    // });
+
+    // console.log(completion);
+    // const aiResponse =  completion.choices[0].message.content;
+    
+    
+    // res.json(aiResponse);
+    
+    //not good enough
+    // langtool.check({
+    //     language: 'en-US',  // Language of the text
+    //     text:  text 
+    // }, (err, result) => {
+    //     if (err) {
+    //         console.error("Error:", err);
+    //     } else {
             
-            res.statusCode = 200;
-            res.json(result.matches);
-        }
-    });
-    
-    
-    
+    //         res.statusCode = 200;
+    //         res.json(result.matches);
+    //     }
+    // });
+
     
   
       
@@ -139,7 +179,7 @@ const checkGrammar = asyncHandler(async (req, res) => {
 
     
     
-  });
+  };
 
 
 module.exports = {getPlayer, getPlayerId, postPlayer, putPlayerId, deletePlayerId, checkGrammar};
