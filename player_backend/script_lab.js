@@ -1,5 +1,37 @@
 
+const refreshToken = async () => {
+    try {
+        console.log("Attempting to refresh token...");
+        let response_refresh = await fetch('https://silent-oxide-441601-r2.et.r.appspot.com/api/user/refresh', {
+            method: 'POST',
+            credentials: 'include',
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username }),
+           
+            
 
+        });
+        
+        if (response_refresh.ok) {
+            const data2 = await response_refresh.json();
+            localStorage.setItem("accessToken", data2.accessToken);
+            
+            alert(`Token refreshed successfully, please try again!!`);
+            
+            
+        } else {
+            const error =  await response_refresh.json();
+            console.error("Refresh token failed:", error);
+            alert(`Error refreshing token: ${error.message}`);
+            
+        }
+    } catch (err) {
+        console.error("Error during refresh token fetch:", err);
+    }
+};
 
 
 function getRandomWord(words) {
@@ -24,15 +56,16 @@ function appendWordToList(type) {
 }
 
 
-const token = localStorage.getItem("accessToken");
-
+let token = localStorage.getItem("accessToken");
+let username = localStorage.getItem('usr');
 
 
 const player_info_get = async function(){
     try{
         
         
-        
+        //http://localhost:8080
+        //https://silent-oxide-441601-r2.et.r.appspot.com
         const response = await fetch(`https://silent-oxide-441601-r2.et.r.appspot.com/api/player/`, {
             method: "GET",
             headers: {
@@ -44,7 +77,7 @@ const player_info_get = async function(){
         
         if (response.ok) {
             const data = await response.json();
-            
+            console.log("response from get player",data);
             
             if(data.length == 0){
                 
@@ -56,9 +89,13 @@ const player_info_get = async function(){
                         },
                         body: JSON.stringify({ playername: "default"}),
                 });
-
-                return data;
-        
+                if(response2.ok){
+                    return data;
+                }else{
+                    refreshToken();
+                }
+                
+                
                     
                 
             }
@@ -73,8 +110,9 @@ const player_info_get = async function(){
         }
 
     }catch(err){
-        console.error(`Server error cannot load user data !`, err);
-        alert('An error occurred. Please try again.');
+        
+        alert(`Server error cannot load user data !`);
+        refreshToken();
     }
     
 }
@@ -87,7 +125,7 @@ const load_player_name  = async function(){
     try{
         const data = await player_info_get();
     
-        
+        console.log(data);
         
         player_name.textContent = data[0].playername;
         player_score.textContent = data[0].score;
@@ -131,6 +169,7 @@ document.getElementById("checkForm").addEventListener("submit", async function(e
         } else {
             const error = await response.json();
             alert(`Error: ${error.message}`);
+            refreshToken();
         }
         
         
@@ -175,7 +214,7 @@ async function scoreSentence(sentence, ai_checked) {
         const score = String(num);
         const correct_ans = String(num1);
         
-        const response = await fetch(`https://silent-oxide-441601-r2.et.r.appspot.com/api/player/${current[0]._id}`, {
+        const response = await fetch(`https://silent-oxide-441601-r2.et.r.appspot.com/api/player/${current[0].player_id}`, {
             method: "PUT",
             headers: {
                 'Content-Type': 'application/json',
@@ -191,6 +230,7 @@ async function scoreSentence(sentence, ai_checked) {
         } else {
             const error = await response.json();
             alert(`Error: ${error.message}`);
+            refreshToken();
         }
     }catch(err){
         console.error(`Server error cannot update score !`, err);

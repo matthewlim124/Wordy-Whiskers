@@ -3,8 +3,7 @@ const Player = require("../models/playerModel.js");
 const {constants} = require("../constants.js");
 const dotenv = require("dotenv");
 const axios = require("axios");
-const langtool = require("languagetool-api");
-const OpenAI = require("openai");
+const supabase = require("../config/dbConnection.js");
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 //get  players
@@ -12,9 +11,12 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 //@access private
 
 const getPlayer = asyncHandler( async (req,res) =>{
-    const player = await Player.find({ user_id: req.user.id});
+
+    const {data, error}= await supabase.from("player").select("*").eq("user_id", req.user.user_id);
+    
     res.statusCode = 200;
-    res.json(player);
+    console.log(data, req.user.user_id);
+    res.json(data);
 
 });
 
@@ -23,13 +25,14 @@ const getPlayer = asyncHandler( async (req,res) =>{
 //@access private
 
 const getPlayerId = asyncHandler (async (req,res) =>{ 
-    const player = await Player.findById(req.params.id);
-    if(!player){
+    const {data, error} = await supabase.from("player").select("*").eq("player_id", req.params.player_id);
+    
+    if(error){
         res.statusCode = constants.NOT_FOUND;
-        throw new Error(`Player by the id ${req.params.id} not found!`);
+        throw new Error(`Player by the id ${req.params.player_id} not found!`);
     }
     res.statusCode = 200;
-    res.json(player);
+    res.json(data);
 
 });
 
@@ -46,13 +49,12 @@ const postPlayer = asyncHandler (async (req,res) =>{
         throw new Error("All fields must have value");
     }
 
-    const player = await Player.create({
-        playername,
-        score: "0",
-        correct_ans: "0",
-        user_id: req.user.id,
-    });
-    res.json(player);
+    const {data, error} = await supabase.from("player").insert([
+
+        {playername: playername, score: '0', correct_ans: '0', user_id: req.user.user_id}, 
+
+    ])
+    res.json({message: "player create success"});
 
 });
 
@@ -61,24 +63,27 @@ const postPlayer = asyncHandler (async (req,res) =>{
 //@access private
 
 const putPlayerId = asyncHandler (async (req,res) =>{
-    const player = await Player.findById(req.params.id);
-    if(!player){
-        res.statusCode = constants.NOT_FOUND;
-        throw new Error(`Player by the id ${req.params.id} not found!`);
-    }
+    const {data, error} = await supabase.from("player").select("*").eq("player_id", req.params.player_id);
+    const {playername, score, correct_ans} = req.body;
 
-    if(player.user_id.toString() !== req.user.id){
+    
+    if(error){
+        res.statusCode = constants.NOT_FOUND;
+        throw new Error(`Player by the id ${req.params.player_id} not found!`);
+    }
+    
+    if(data[0].user_id !== req.user.user_id){
         res.statusCode = constants.FORBIDDEN;
         throw new Error("Forbidden update, user does not have permission to update");
     }
 
-    const updatedPlayer = await Player.findByIdAndUpdate(
-        req.params.id, //update id
-        req.body, //update content
-        {new: true} //query option
-    );
+
+
+    const {data: playerUpdate, error: playerError}= await supabase.from("player").update({playername: playername, score: score, correct_ans: correct_ans}).eq("player_id", req.params.player_id);
+
+    
     res.statusCode = 200;
-    res.json(updatedPlayer);
+    res.json({message: "update player success!"});
 
 });
 
@@ -87,20 +92,20 @@ const putPlayerId = asyncHandler (async (req,res) =>{
 //@access private
 
 const deletePlayerId = asyncHandler( async (req,res) =>{
-    const player = await Player.findById(req.params.id);
-    if(!player){
+    const {data, error} = await supabase.from("player").select("*").eq("player_id", req.params.player_id);
+    if(!data){
         res.statusCode = constants.NOT_FOUND;
         throw new Error(`Player by the id ${req.params.id} not found!`);
     }
 
-    if(player.user_id.toString() !== req.user.id){
+    if(data[0].user_id !== req.user.id){
         res.statusCode = constants.FORBIDDEN;
         throw new Error("Forbidden update, user does not have permission to update");
     }
 
-    await Player.deleteOne({_id: req.params.id});
+    
     res.statusCode = 200;
-    res.json(player);
+    res.json(data);
 
 });
 

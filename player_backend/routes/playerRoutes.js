@@ -12,7 +12,7 @@ router.route("/").get(getPlayer).post(postPlayer);
 router.route("/checkGrammar").post(checkGrammar);
 
 
-router.route("/:id").get(getPlayerId).put(putPlayerId).delete(deletePlayerId);
+router.route("/:player_id").get(getPlayerId).put(putPlayerId).delete(deletePlayerId);
 
 
 

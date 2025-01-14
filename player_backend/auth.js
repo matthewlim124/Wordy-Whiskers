@@ -23,6 +23,7 @@ const sign_in = async function(){
             const data = await response.json();
             alert(`Sign-in successful! Access Token: ${data.accessToken}`);
             localStorage.setItem('accessToken', data.accessToken);
+            localStorage.setItem('usr', data.username);
             return data;
         } 
     }catch(err){
