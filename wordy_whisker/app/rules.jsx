@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'skyblue',
         padding: 20,
         fontFamily: 'Press Start 2P', 
-        width: Dimensions.get('window').width * 0.8, // 80% of screen width
+        width: Dimensions.get('window').width * 0.8, 
         maxHeight: Dimensions.get('window').height * 0.8,
     },
     title: {

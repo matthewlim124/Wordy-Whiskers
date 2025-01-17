@@ -10,7 +10,7 @@
     "newArchEnabled": true,
     "splash": {
       "image": "./assets/images/wordy-splash.png",
-      "resizeMode": "cover",
+      "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "ios": {
@@ -18,20 +18,30 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/wordy-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.matt_lim.wordy_whisker"
     },
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/wordy-icon.png"
     },
     "plugins": [
       "expo-router"
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "d7cf89d0-17ab-42d8-a8b5-56641e7a5078"
+      }
+    },
+    "owner": "matt_lim"
   }
 }

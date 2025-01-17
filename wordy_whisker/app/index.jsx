@@ -24,11 +24,11 @@ const SignUpScreen = () => {
       try {
         const accessToken = await getItemFromAsyncStorage('token');
         if (accessToken) {
-          // User is logged in, redirect to 'lab'
+          
           navigation.navigate('(lab)'); // Use navigation.navigate
         } else {
-          // User is not logged in, show some content or redirect to login
-          // For now, let's just display a message
+          
+          
           <View>
             <Text>User is not logged in</Text>
           </View>
@@ -62,7 +62,7 @@ const SignUpScreen = () => {
       if (response.ok) {
         const data = await response.json();
         Alert.alert('Success', `Sign-up successful! ${data.username}`);
-        navigation.navigate('signIn'); // Assuming "SignIn" is the name of your sign-in screen.
+        navigation.navigate('signIn'); 
       } else {
         const error = await response.json();
         Alert.alert('Error', error.message);
@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     justifyContent: 'center',
   },
-  buttonText: {  // Style for the text inside the button
+  buttonText: {  
     fontFamily: 'Press2P',
     fontSize: 10,
     color: 'white',

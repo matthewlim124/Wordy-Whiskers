@@ -15,19 +15,19 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        tabBarInactiveTintColor: 'gray', // Add inactive tab color for contrast
+        tabBarInactiveTintColor: 'gray', 
         headerShown: false,
         tabBarButton: HapticTab,
         tabBarBackground: TabBarBackground,
         tabBarStyle: Platform.select({
           ios: {
-            // Use a transparent background on iOS to show the blur effect
+            
             position: 'absolute',
           },
           default: {},
         }),
         tabBarIconStyle: {
-          // Adjust icon size and padding as needed
+          
           fontSize: 24,
           paddingTop: 2,
           
@@ -50,8 +50,8 @@ export default function TabLayout() {
         options={{
           title: 'Leaderboard',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="leaderboard.fill" color={color} />,
-          tabBarLabelStyle: {  // Add this option
-            fontFamily: 'Press2P', // Use your custom font here
+          tabBarLabelStyle: {  
+            fontFamily: 'Press2P',
             fontSize: 8,
           },
         
@@ -62,8 +62,8 @@ export default function TabLayout() {
         options={{
           title: 'Profile',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="person.fill" color={color} />,
-          tabBarLabelStyle: {  // Add this option
-            fontFamily: 'Press2P', // Use your custom font here
+          tabBarLabelStyle: {  
+            fontFamily: 'Press2P', 
             fontSize: 8,
           },
         

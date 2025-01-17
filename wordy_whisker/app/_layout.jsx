@@ -8,7 +8,7 @@ import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
+
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
@@ -36,30 +36,29 @@ export default function RootLayout() {
         <Stack.Screen name="signIn" options={{
                         headerTitle: 'Sign In',
                         headerTitleStyle: {
-                            fontFamily: 'Press2P', // Use the custom font for the header title
-                            fontSize: 16,
+                            fontFamily: 'Press2P',
                         },
                         headerStyle: {
-                            backgroundColor: 'skyblue', // Set the header background color
-                            height: 80, // Increase the header height (optional)
-                            paddingTop: 20, // Add padding to the top (optional)
+                            backgroundColor: 'skyblue', 
+                            height: 80, 
+                            paddingTop: 20, 
                         },
-                        headerTintColor: 'white', // Set the header text color
-                        headerTitleAlign: 'left', // Align the title to the left
+                        headerTintColor: 'white', 
+                        headerTitleAlign: 'left', 
                     }} />
         <Stack.Screen name="rules" options={{
                         headerTitle: 'Rules',
                         headerTitleStyle: {
-                            fontFamily: 'Press2P', // Use the custom font for the header title
+                            fontFamily: 'Press2P', 
                             fontSize: 16,
                         },
                         headerStyle: {
-                            backgroundColor: 'skyblue', // Set the header background color
-                            height: 80, // Increase the header height (optional)
-                            paddingTop: 20, // Add padding to the top (optional)
+                            backgroundColor: 'skyblue', 
+                            height: 80, 
+                            paddingTop: 20, 
                         },
-                        headerTintColor: 'white', // Set the header text color
-                        headerTitleAlign: 'left', // Align the title to the left
+                        headerTintColor: 'white', 
+                        headerTitleAlign: 'left', 
                     }} />
         
 
