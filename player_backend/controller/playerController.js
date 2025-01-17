@@ -109,8 +109,23 @@ const deletePlayerId = asyncHandler( async (req,res) =>{
 
 });
 
+//get all player
+//@route for GET /api/player/getAllPlayer
+//@access private
+
+const getAllPlayer = asyncHandler (async (req,res) =>{ 
+    const {data, error} = await supabase.from("player").select("playername, score, correct_ans, user(username)");
+    
+    
+    
+    res.statusCode = 200;
+    res.json(data);
+
+});
+
+
 //check Grammar
-//@route for POST /api/player
+//@route for POST /api/player/checkGrammar
 //@access private
 
 const checkGrammar = async (req, res) => {
@@ -187,4 +202,4 @@ const checkGrammar = async (req, res) => {
   };
 
 
-module.exports = {getPlayer, getPlayerId, postPlayer, putPlayerId, deletePlayerId, checkGrammar};
+module.exports = {getPlayer, getPlayerId, postPlayer, putPlayerId, deletePlayerId, checkGrammar, getAllPlayer};

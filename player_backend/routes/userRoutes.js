@@ -4,7 +4,6 @@ const router = express.Router();
 const validateToken = require("../middleware/validateTokenHandler.js");
 
 router.post("/register", registerUser);
-
 router.post("/login", loginUser);
 router.post("/refresh", refreshUser);
 
